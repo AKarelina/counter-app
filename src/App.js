@@ -14,27 +14,24 @@ function App() {
     const [initialValue, setInitialValue] = useState(null)
 
     function onChangeSetInitialValue(event) {
-        setInitialValue(event.currentTarget.value)
+
+        setInitialValue(event.target.value)
+
     }
 
     function onClickAddCounter() {
-        let newCount = {id:v1(), value: initialValue}
+        let newCount = {id:v1(), value: Number(initialValue) || 0}
         setCounts([...counts, newCount])
-        console.log(counts)
     }
     function onClickDeleteCount(id) {
         setCounts(counts.filter((count)=>count.id!==id))
     }
     function onClickIncreaseCount(id) {
-        let increasedCounts = counts.find(count=> count.id === id)
-        increasedCounts["value"] += 1
-        setCounts([...counts])
+        setCounts(counts.map(count=>count.id===id? {...count, value: count.value + 1} : count))
 
     }
     function onClickDecreaseCount(id) {
-        let increasedCounts = counts.find(count=> count.id === id)
-        increasedCounts["value"] -= 1
-        setCounts([...counts])
+        setCounts(counts.map(count => count.id === id? {...count, value: count.value - 1}: count))
 
     }
     return (
